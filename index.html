@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%237c3aed'/%3E%3Crect x='8' y='5' width='16' height='22' rx='2' fill='none' stroke='white' stroke-width='2'/%3E%3Cline x1='11' y1='11' x2='21' y2='11' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3Cline x1='11' y1='15' x2='21' y2='15' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3Cline x1='11' y1='19' x2='17' y2='19' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>Paper Moisture Content Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-family:'Prompt',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   background:#f0f4f8;
   color:#1e293b;
   min-height:100vh;
@@ -16,7 +18,6 @@ body{
   overflow-x:hidden;
 }
 
-/* ── Lab background: grid + floating paper squares ── */
 body::before{
   content:'';
   position:fixed;
@@ -50,7 +51,6 @@ body::before{
   100%{opacity:0;  transform:translateY(-110vh) rotate(180deg) scale(1.05)}
 }
 
-/* corner lab decorations */
 .lab-corner{
   position:fixed;
   width:180px;
@@ -69,6 +69,18 @@ body::before{
   margin:0 auto;
   padding:2rem 1rem 3rem;
 }
+
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:#fff;border:1px solid #e2e8f0;border-radius:20px;
+  padding:6px 14px 6px 10px;margin-bottom:1.2rem;
+  font-size:12px;font-weight:600;color:#2563eb;
+  text-decoration:none;cursor:pointer;
+  box-shadow:0 1px 4px rgba(0,0,0,0.06);
+  transition:all 0.2s;
+}
+.back-btn:hover{background:#eff6ff;border-color:#93c5fd}
+.back-btn svg{width:14px;height:14px;fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* ── Header ── */
 .header{text-align:center;margin-bottom:2rem}
@@ -134,7 +146,7 @@ input[type=number]{
   font-size:14px;
   outline:none;
   transition:border-color 0.2s,box-shadow 0.2s,background 0.2s;
-  font-family:monospace;
+  font-family:'JetBrains Mono',monospace;
   -moz-appearance:textfield;
 }
 input[type=number]::-webkit-inner-spin-button,
@@ -146,10 +158,9 @@ input[type=number]:focus{
 }
 input[type=number].err{border-color:#ef4444;background:#fff5f5}
 
-/* unit badge on inputs */
 .inp-unit{
   position:absolute;right:12px;top:50%;transform:translateY(-50%);
-  font-size:11px;color:#94a3b8;font-family:monospace;pointer-events:none;
+  font-size:11px;color:#94a3b8;font-family:'JetBrains Mono',monospace;pointer-events:none;
 }
 
 /* ── Error ── */
@@ -199,7 +210,6 @@ input[type=number].err{border-color:#ef4444;background:#fff5f5}
 }
 .rcard-unit{font-size:14px;color:#64748b;font-weight:500}
 
-/* moisture level indicator */
 .mc-level{
   margin-top:1rem;padding:8px 16px;border-radius:8px;
   font-size:12px;font-weight:600;letter-spacing:.5px;display:none;
@@ -212,11 +222,10 @@ input[type=number].err{border-color:#ef4444;background:#fff5f5}
   background:#f8fafc;border:1px solid #e2e8f0;
   border-radius:8px;padding:1rem;margin-top:1.25rem;
   font-size:12px;color:#64748b;line-height:1.7;
-  font-family:monospace;text-align:left;
+  font-family:'JetBrains Mono',monospace;text-align:left;
 }
 .formula strong{color:#334155}
 
-/* ── Paper watermark in result card ── */
 .rcard-watermark{
   position:absolute;right:16px;bottom:16px;opacity:.04;
   width:80px;height:80px;
@@ -228,16 +237,33 @@ input[type=number].err{border-color:#ef4444;background:#fff5f5}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── Footer ── */
 .footer{text-align:center;margin-top:1.5rem;font-size:11px;color:#94a3b8;letter-spacing:.3px}
+
+/* ── Google Sheets button ── */
+.btn-sheets{
+  width:100%;padding:13px;border:none;border-radius:10px;
+  background:linear-gradient(135deg,#16a34a,#15803d);
+  color:#fff;font-size:14px;font-weight:700;cursor:pointer;
+  transition:all 0.22s;display:flex;align-items:center;justify-content:center;gap:9px;
+  box-shadow:0 4px 14px rgba(22,163,74,.3);margin-top:1rem;letter-spacing:0.3px;
+}
+.btn-sheets:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(22,163,74,.4)}
+.btn-sheets:active{transform:translateY(0)}
+.btn-sheets:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.btn-sheets svg{width:18px;height:18px;flex-shrink:0}
+.sheets-status{
+  margin-top:.75rem;padding:10px 14px;border-radius:8px;
+  font-size:12px;font-weight:600;text-align:center;display:none;
+}
+.sheets-status.ok{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+.sheets-status.err{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+.sheets-status.loading{background:#f0f9ff;color:#0369a1;border:1px solid #bae6fd}
 </style>
 </head>
 <body>
 
-<!-- Animated paper squares background -->
 <div class="paper-bg" id="paper-bg"></div>
 
-<!-- Lab corner SVG decorations -->
 <svg class="lab-corner tl" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
   <rect x="10" y="10" width="60" height="60" rx="4" fill="none" stroke="#3b82f6" stroke-width="2"/>
   <rect x="30" y="30" width="20" height="20" rx="2" fill="#3b82f6"/>
@@ -256,6 +282,11 @@ input[type=number].err{border-color:#ef4444;background:#fff5f5}
 </svg>
 
 <div class="wrap">
+  <a class="back-btn" href="../index.html">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Lab Hub
+  </a>
+
   <div class="header">
     <div class="badge">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-7 14H7v-2h5v2zm5-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
@@ -314,11 +345,24 @@ input[type=number].err{border-color:#ef4444;background:#fff5f5}
     </div>
   </div>
 
+  <div id="sheets-section" style="display:none">
+    <button class="btn-sheets" id="btn-sheets">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/>
+        <line x1="9" y1="3" x2="9" y2="21"/>
+      </svg>
+      บันทึกไปยัง Google Sheets
+    </button>
+    <div class="sheets-status" id="sheets-status"></div>
+  </div>
+
   <div class="footer">Paper Moisture Calculator · Laboratory Edition</div>
 </div>
 
 <script>
-/* ── Floating paper squares ── */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw2SFqPUOZL-t63IYOepsxSkV7pjmYT_FUiZ3wfYUr5RLxQamGbJUBc0B5EKy3fuHgc1w/exec';
+
 (function(){
   const bg = document.getElementById('paper-bg');
   const colors = ['#bfdbfe','#ddd6fe','#a5f3fc','#bbf7d0','#e2e8f0'];
@@ -343,9 +387,6 @@ input[type=number].err{border-color:#ef4444;background:#fff5f5}
   }
 })();
 
-
-
-/* ── Calculator logic ── */
 let dp = 2;
 let calculated = false;
 
@@ -430,7 +471,11 @@ function calc() {
   rs.style.animation='';
 
   document.getElementById('btn-reset').style.display='block';
+  document.getElementById('sheets-section').style.display='block';
+  document.getElementById('sheets-status').style.display='none';
+
   calculated = true;
+  lastResult = { before, after, mc: fmt(mc), level: getMcLevel(mc).cls };
 
   setTimeout(()=>{ rs.scrollIntoView({behavior:'smooth',block:'center'}); },100);
 }
@@ -445,8 +490,48 @@ function reset() {
   document.getElementById('err-main').style.display='none';
   document.getElementById('mc-val').textContent='—';
   document.getElementById('mc-level').style.display='none';
+  document.getElementById('sheets-section').style.display='none';
+  document.getElementById('sheets-status').style.display='none';
   calculated=false;
+  lastResult=null;
 }
+
+let lastResult = null;
+
+document.getElementById('btn-sheets').addEventListener('click', async function() {
+  if (!lastResult) return;
+  const btn = this;
+  const statusEl = document.getElementById('sheets-status');
+  btn.disabled = true;
+  statusEl.className='sheets-status loading';
+  statusEl.textContent='⏳ กำลังบันทึก...';
+  statusEl.style.display='block';
+
+  const levelMap = { low:'ต่ำ', med:'ปานกลาง', high:'สูง' };
+  const payload = {
+    timestamp: new Date().toLocaleString('th-TH', {timeZone:'Asia/Bangkok'}),
+    before: lastResult.before,
+    after:  lastResult.after,
+    mc:     lastResult.mc,
+    level:  levelMap[lastResult.level] || lastResult.level
+  };
+
+  try {
+    await fetch(SCRIPT_URL, {
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    statusEl.className='sheets-status ok';
+    statusEl.textContent='✓ บันทึกลง Google Sheets เรียบร้อยแล้ว';
+  } catch(err) {
+    statusEl.className='sheets-status err';
+    statusEl.textContent='✗ เกิดข้อผิดพลาด — ตรวจสอบ Script URL';
+  } finally {
+    btn.disabled = false;
+  }
+});
 </script>
 </body>
 </html>
